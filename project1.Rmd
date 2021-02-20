@@ -139,8 +139,14 @@ data2$wday <- wday
 
 #load the lattice library
 library(lattice)
+
+#calculate the average of steps 
+average_per_interval2 <- data2 %>%
+    group_by(wday, interval) %>%
+    summarize(avg = mean(steps))
+
 #plot illustrating the diferent activity patterns between weekend and weekdays 
-xyplot(steps ~ interval | wday, data2, type = "l", pch = 20, layout = c(1,2), main = "Activity paterns between weekdays and weekends", ylab = "Number of steps", xlab = "Interval")
+xyplot(avg ~ interval | wday, average_per_interval2, type = "l", pch = 20, layout = c(1,2), main = "Activity paterns between weekdays and weekends", ylab = "Number of steps", xlab = "Interval")
 dev.copy(png,"ActivityWeekdaysWeekends.png")
 dev.off()
 
